@@ -25,8 +25,8 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
-          cache-from: type=registry,ref=jirsh/ngx_modsec_brotli:${{ env.BRANCH }}
-          cache-to: type=inline
+          cache-from: type=type=gha
+          cache-to: type=gha
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
