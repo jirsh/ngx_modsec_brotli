@@ -30,5 +30,5 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            jirsh/ngx_modsec_brotli:${{ env.BRANCH }}
-            jirsh/ngx_modsec_brotli:latest
+            ${{ env.REGISTRY }}/jirsh/ngx_modsec_brotli:${{ env.BRANCH }}
+            ${{ env.REGISTRY }}/jirsh/ngx_modsec_brotli:latest
