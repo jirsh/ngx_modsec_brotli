@@ -53,6 +53,7 @@ RUN echo 'Cloning Modsec Nginx Connector, GeoIP, ModSec OWASP Rules, and downloa
     git clone -b master --depth 1 https://github.com/SpiderLabs/ModSecurity-nginx.git && \
     git clone -b master --depth 1 https://github.com/google/ngx_brotli.git && \
     git clone -b master --depth 1 https://github.com/leev/ngx_http_geoip2_module.git && \
+    git clone -b master --depth 1 https://github.com/openresty/redis2-nginx-module.git && \
     git clone -b ${OWASP_TAG} --depth 1 https://github.com/coreruleset/coreruleset.git /usr/local/owasp-modsecurity-crs && \
     wget -O - https://nginx.org/download/nginx-$NGINX_VERSION.tar.gz | tar -xz && \
     mkdir -p /etc/nginx/geoip && \
@@ -65,13 +66,15 @@ RUN echo 'Installing Nginx Modules' && \
         ./configure --with-compat \
             --add-dynamic-module=../ModSecurity-nginx \
             --add-dynamic-module=../ngx_brotli \
-            --add-dynamic-module=../ngx_http_geoip2_module && \
+            --add-dynamic-module=../ngx_http_geoip2_module \
+            --add-dynamic-module=../redis2-nginx-module && \
         make modules \
     ) && \
     cp /opt/nginx-$NGINX_VERSION/objs/ngx_http_modsecurity_module.so \
-        /opt/nginx-$NGINX_VERSION/objs/ngx_http_geoip2_module.so \
         /opt/nginx-$NGINX_VERSION/objs/ngx_http_brotli_filter_module.so \
         /opt/nginx-$NGINX_VERSION/objs/ngx_http_brotli_static_module.so \
+        /opt/nginx-$NGINX_VERSION/objs/ngx_http_redis2_module.so \
+        /opt/nginx-$NGINX_VERSION/objs/ngx_http_geoip2_module.so \
         /usr/lib/nginx/modules/ && \
     rm -fr /opt/* && \
     apk del general-dependencies
